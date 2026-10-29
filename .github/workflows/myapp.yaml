@@ -5,6 +5,8 @@ on:
 jobs:
   myjob1:
     runs-on: ubuntu-latest   # 26.04
+    env:
+      BUILD_NUMBER: ${{ github.run_number }}
     steps:
       - name: Check Docker
         run: |
