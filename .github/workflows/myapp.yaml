@@ -1,0 +1,12 @@
+name: myCICD-Using-Github-Action
+on: 
+  push:   #Automatic Trigger  Develoer-----> GitHub---->GitHubAction
+
+jobs:
+  myjob1:
+    runs-on: ubuntu-latest   # 26.04
+    steps:
+      - name: mystep1
+        run: |
+          cat /etc/os-release 
+
