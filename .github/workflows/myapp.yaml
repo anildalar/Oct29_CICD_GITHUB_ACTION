@@ -18,10 +18,15 @@ jobs:
       - name: mystep4
         run: |
           ls -al
-      - name: mystep5
+      - name: checkimage-and-container
         run: |
-          cat /etc/passwd
-      - name: mystep6
+          docker image ls
+          docker ps -a
+      - name: build-image
         run: |    
-          cat /etc/os-release 
-
+          docker-compose -f docker-compose.devopsstudy.yaml build devopsstudy
+      - name: build-image-check
+        run: |    
+          docker-compose -f docker-compose.devopsstudy.yaml ps -a
+          docker image ls
+          docker ps -a
