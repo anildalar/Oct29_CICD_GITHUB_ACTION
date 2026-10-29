@@ -48,9 +48,19 @@ jobs:
       - name: Verify pushed image tag
         run: |
           echo "Image: oklabs/myimage:t${BUILD_NUMBER}"
-      - name: Login to remote server
-        run: |
-          sshpass -p 'Oklabs@331122' ssh \
-          -o StrictHostKeyChecking=accept-new \
-          root@164.68.105.85 \
-          'ls -al'
+      # - name: Login to remote server
+      #   run: |
+      #     sshpass -p 'Oklabs@331122' ssh \
+      #     -o StrictHostKeyChecking=accept-new \
+      #     root@164.68.105.85 \
+      #     'ls -al'
+      - name: List production server files
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          script: |
+            whoami
+            hostname
+            ls -al
