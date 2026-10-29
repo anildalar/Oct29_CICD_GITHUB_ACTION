@@ -91,17 +91,24 @@ EOF
 # 3. Configure HTTPS virtual host
 # ------------------------------------------------------------
 
+
 write_https_config() {
     cat > "${HTTPS_CONFIG}" <<EOF
 <VirtualHost *:443>
     ServerName ${FQDN}
     ServerAlias ${WWW_DOMAIN}
 
-    DocumentRoot /var/www/html
-
     SSLEngine on
     SSLCertificateFile ${FULLCHAIN}
     SSLCertificateKeyFile ${PRIVKEY}
+
+    RewriteEngine On
+
+    # Redirect non-www HTTPS to www HTTPS
+    RewriteCond %{HTTP_HOST} ^${FQDN}$ [NC]
+    RewriteRule ^ https://${WWW_DOMAIN}%{REQUEST_URI} [R=301,L,NE]
+
+    DocumentRoot /var/www/html
 
     <Directory /var/www/html>
         Options FollowSymLinks
@@ -113,6 +120,7 @@ EOF
 
     a2ensite 001-https >/dev/null
 }
+
 
 # ------------------------------------------------------------
 # 4. Start Apache on HTTP

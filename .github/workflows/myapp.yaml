@@ -54,7 +54,7 @@ jobs:
       #     -o StrictHostKeyChecking=accept-new \
       #     root@164.68.105.85 \
       #     'ls -al'
-      
+
       # - name: Pull image on production server
       #   uses: appleboy/ssh-action@v1
       #   env:
@@ -71,6 +71,7 @@ jobs:
       #       docker pull oklabs/myimage:t${BUILD_NUMBER}
       #       docker images
       
+      
       - name: Pull and launch container on production server
         uses: appleboy/ssh-action@v1
         env:
@@ -85,10 +86,13 @@ jobs:
 
             IMAGE="oklabs/myimage:t${BUILD_NUMBER}"
 
-            echo "Pulling image: $IMAGE"
+            echo "Removing previous container if it exists..."
+            docker rm -f devopsstudy 2>/dev/null || true
+
+            echo "Pulling new image: $IMAGE"
             docker pull "$IMAGE"
 
-            echo "Launching container..."
+            echo "Launching new container..."
             docker run -d \
               --name devopsstudy \
               --network host \
@@ -98,5 +102,9 @@ jobs:
               "$IMAGE"
 
             echo "Container status:"
-            docker ps -a
+            docker ps -a --filter name=devopsstudy
+
+            echo "Container logs:"
+            docker logs --tail 50 devopsstudy
+
 
