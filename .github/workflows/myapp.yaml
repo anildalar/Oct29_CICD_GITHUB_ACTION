@@ -24,9 +24,9 @@ jobs:
           docker ps -a
       - name: build-image
         run: |    
-          docker-compose -f docker-compose.devopsstudy.yaml build devopsstudy
+          docker compose -f docker-compose.devopsstudy.yaml build devopsstudy
       - name: build-image-check
         run: |    
-          docker-compose -f docker-compose.devopsstudy.yaml ps -a
+          docker compose -f docker-compose.devopsstudy.yaml ps -a
           docker image ls
           docker ps -a
