@@ -8,5 +8,7 @@ jobs:
     steps:
       - name: mystep1
         run: |
+          pwd
+          ls -al
           cat /etc/os-release 
 
