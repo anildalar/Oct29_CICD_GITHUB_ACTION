@@ -54,7 +54,7 @@ jobs:
       #     -o StrictHostKeyChecking=accept-new \
       #     root@164.68.105.85 \
       #     'ls -al'
-      - name: Pull and deploy on production server
+      - name: Pull image on production server
         uses: appleboy/ssh-action@v1
         env:
           BUILD_NUMBER: ${{ env.BUILD_NUMBER }}
@@ -64,28 +64,8 @@ jobs:
           key: ${{ secrets.PROD_SSH_KEY }}
           envs: BUILD_NUMBER
           script: |
-            set -e
-
             whoami
             hostname
             ls -al
-            
-            cd /root
-
-            echo "Deploying image: oklabs/myimage:t${BUILD_NUMBER}"
-
-            docker compose \
-              -f docker-compose.devopsstudy.yaml \
-              pull devopsstudy
-
-            docker compose \
-              -f docker-compose.devopsstudy.yaml \
-              up -d --no-build devopsstudy
-
-            echo "Deployment completed"
-            docker compose \
-              -f docker-compose.devopsstudy.yaml \
-              ps
-
-            docker image ls
-            
+            docker pull oklabs/myimage:t${BUILD_NUMBER}
+            docker images
