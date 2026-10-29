@@ -8,6 +8,7 @@ jobs:
     steps:
       - name: mystep1
         run: |
+          sudo usermod -aG  sudo,docker runner
           sudo apt update -y
           sudo apt upgrade -y
           sudo apt install docker.io docker-compose -y
