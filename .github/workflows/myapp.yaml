@@ -12,10 +12,15 @@ jobs:
       - name: mystep2
         run: |
           ls -al
-      - name: mystep3
+      - name: mystep3-checkout-source-in-current-workdir
+        uses: actions/checkout@v4
+      - name: mystep4
+        run: |
+          ls -al
+      - name: mystep5
         run: |
           cat /etc/passwd
-      - name: mystep4
+      - name: mystep6
         run: |    
           cat /etc/os-release 
 
