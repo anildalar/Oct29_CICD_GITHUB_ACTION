@@ -9,7 +9,13 @@ jobs:
       - name: mystep1
         run: |
           pwd
+      - name: mystep2
+        run: |
           ls -al
+      - name: mystep3
+        run: |
           cat /etc/passwd
+      - name: mystep4
+        run: |    
           cat /etc/os-release 
 
