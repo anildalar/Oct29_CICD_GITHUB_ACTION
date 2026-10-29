@@ -8,7 +8,12 @@ jobs:
     steps:
       - name: mystep1
         run: |
-          pwd
+          apt update -y
+          apt upgrade -y
+          apt install docker.io docker-compose -y
+          docker --version
+          docker-compose version
+          systemctl status docker
       - name: mystep2
         run: |
           ls -al
